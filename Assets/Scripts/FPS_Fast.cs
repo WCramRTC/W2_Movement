@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class FPS_Fast : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
-    public float mouseSensitivity = 2.0f;
+   public float moveSpeed = 5f;
+    public float mouseSensitivity = 2f;
 
     private CharacterController characterController;
-
-    private float verticalRotation = 0;
     private Camera playerCamera;
+    private float verticalRotation = 0f;
 
     void Start()
     {
@@ -30,16 +29,13 @@ public class FPS_Fast : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
 
         transform.Rotate(Vector3.up * mouseX);
-        playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
 
         // Movement
-        float forwardSpeed = Input.GetAxis("Vertical") * moveSpeed;
-        float sideSpeed = Input.GetAxis("Horizontal") * moveSpeed;
+        float moveForward = Input.GetAxis("Vertical") * moveSpeed;
+        float moveSideways = Input.GetAxis("Horizontal") * moveSpeed;
 
-        Vector3 speed = new Vector3(sideSpeed, 0, forwardSpeed);
-
-        speed = transform.rotation * speed;
-
-        characterController.SimpleMove(speed);
+        Vector3 movement = transform.forward * moveForward + transform.right * moveSideways;
+        characterController.SimpleMove(movement);
     }
 }
